@@ -1,0 +1,2 @@
+# azurepublic
+Azure Public Training
