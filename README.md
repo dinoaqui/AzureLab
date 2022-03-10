@@ -22,5 +22,5 @@ Estrutura Bem Projetada do Microsoft Azure
 - Excelência operacional: Processos de operações que mantêm um sistema em execução em produção.
 - Eficiência de desempenho: A capacidade de um sistema adaptar-se às alterações na carga.
 
-- https://docs.microsoft.com/pt-br/azure/architecture/framework/
-- https://docs.microsoft.com/pt-br/learn/paths/azure-well-architected-framework/
+  - https://docs.microsoft.com/pt-br/azure/architecture/framework/
+  - https://docs.microsoft.com/pt-br/learn/paths/azure-well-architected-framework/
