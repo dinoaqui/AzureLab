@@ -1,6 +1,7 @@
 # Azure Public Training
 
-Az104: https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
+AZ-104-MicrosoftAzureAdministrator
+- https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
 
 Enterprise-Scale - Reference Implementation
 
