@@ -16,7 +16,7 @@ Arquiteturas de referência de segurança cibernética da Microsoft
 
 Estrutura Bem Projetada do Microsoft Azure
 
-- Confiabilidade: A capacidade de um sistema de se recuperar de falhas e continuar funcionando.
+-- Confiabilidade: A capacidade de um sistema de se recuperar de falhas e continuar funcionando.
 - Segurança: Proteger aplicativos e dados contra ameaças.
 - Otimização de custos: Gerenciamento de custos para maximizar o valor entregue.
 - Excelência operacional: Processos de operações que mantêm um sistema em execução em produção.
