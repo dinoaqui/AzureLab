@@ -20,3 +20,5 @@ Estrutura Bem Projetada do Microsoft Azure
 - Eficiência de desempenho: A capacidade de um sistema adaptar-se às alterações na carga.
   - https://docs.microsoft.com/pt-br/azure/architecture/framework/
   - https://docs.microsoft.com/pt-br/learn/paths/azure-well-architected-framework/
+
+https://github.com/MicrosoftDocs/azure-docs.pt-pt/blob/master/articles/azure-resource-manager/management/tag-resources.md#powershell
