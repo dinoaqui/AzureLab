@@ -22,3 +22,6 @@ Estrutura Bem Projetada do Microsoft Azure
   - https://docs.microsoft.com/pt-br/learn/paths/azure-well-architected-framework/
 
 https://github.com/MicrosoftDocs/azure-docs.pt-pt/blob/master/articles/azure-resource-manager/management/tag-resources.md#powershell
+
+"What the Hack" is a set of challenge based hackathons that can be hosted in-person or virtually via Microsoft Teams.
+- https://github.com/microsoft/WhatTheHack
