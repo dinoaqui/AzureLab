@@ -25,3 +25,15 @@ https://github.com/MicrosoftDocs/azure-docs.pt-pt/blob/master/articles/azure-res
 
 "What the Hack" is a set of challenge based hackathons that can be hosted in-person or virtually via Microsoft Teams.
 - https://github.com/microsoft/WhatTheHack
+
+
+Links para aprendizado
+1) https://lnkd.in/dxDk8V3p
+2) https://lnkd.in/dnNJ7i3N
+3) https://lnkd.in/dGKzijrR
+4) https://lnkd.in/d5PAvmyu
+5) https://lnkd.in/d246wjDG
+6) https://lnkd.in/dARx2n6v
+7) https://lnkd.in/dKcqexBc
+8) https://lnkd.in/d9QfGSkN
+9)  https://lnkd.in/dweCnBh2
