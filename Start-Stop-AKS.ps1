@@ -3,7 +3,7 @@ workflow start-stop-aks {
 	Param(
 	[string]$VmName,
 	[string]$ResourceGroupName,
-	[ValidateSet(“Start”, “Stop”)]
+	[ValidateSet(“start”, “stop”)]
 	[string]$VmAction
 	
 	)
