@@ -3,6 +3,9 @@
 AZ-104-MicrosoftAzureAdministrator
 - https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
 
+LAB | Scripts | Schemas | Scenarios
+- https://github.com/MicrosoftDocs/azure-docs/tree/main/articles
+
 Enterprise-Scale - Reference Implementation
 - https://github.com/Azure/Enterprise-Scale
 
