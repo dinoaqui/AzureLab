@@ -1,15 +1,14 @@
-#Nome do grupo de recursos onde serão feitos os snapshots e exclusão, observe que o mesmo deve ser #criado antes da execução do mesmo, ou utilizar um RG existente. Voce pode utilizar qualquer nome #de sua preferencia.
+# Nome do grupo de recursos onde serão feitos os snapshots e exclusão, observe que o mesmo deve ser #criado antes da execução do mesmo, ou utilizar um RG existente. Voce pode utilizar qualquer nome #de sua preferencia.
 $resourceGroupName = "snapshots"
 $timestamp = Get-Date -f MM-dd-yyyy_HH_mm_ss
 
-#Nome da vm ou lista.
+# Nome da vm ou lista.
 $vm='VM001'
-
 
 
 #$vm = $vm | out-string
 
-#Nome do snapshot nome vm + hora atual + nome do disco de origem
+# Nome do snapshot nome vm + hora atual + nome do disco de origem
 $snapshotOSdisk = "$VM" + "_$timestamp" + "_OsDisk"
 $VMproperties = Get-AzVM -Name $VM -InformationAction Ignore
 $location = $VMproperties.Location
@@ -33,7 +32,7 @@ New-AzSnapshot -Snapshot $snapshotdiscodedados -SnapshotName $snapshotDatadisk -
 }
 
 
-#Busca todos os snapshots com mais de 7 dias de existência no RG previamente selecionado.  
+# Busca todos os snapshots com mais de 7 dias de existência no RG previamente selecionado.  
 
 $snapshots = Get-AzSnapshot -ResourceGroupName $resourceGroupName | Where {$_.TimeCreated -lt (Get-Date).addDays(-7)}
 foreach ($snapshot in $snapshots)
