@@ -1,0 +1,42 @@
+#Nome do grupo de recursos onde serão feitos os snapshots e exclusão, observe que o mesmo deve ser #criado antes da execução do mesmo, ou utilizar um RG existente. Voce pode utilizar qualquer nome #de sua preferencia.
+$resourceGroupName = "snapshots"
+$timestamp = Get-Date -f MM-dd-yyyy_HH_mm_ss
+
+#Nome da vm ou lista.
+$vm='VM001'
+
+
+
+#$vm = $vm | out-string
+
+#Nome do snapshot nome vm + hora atual + nome do disco de origem
+$snapshotOSdisk = "$VM" + "_$timestamp" + "_OsDisk"
+$VMproperties = Get-AzVM -Name $VM -InformationAction Ignore
+$location = $VMproperties.Location
+$snapshotOSdisk1 = New-AzSnapshotConfig -SourceUri $VMproperties.StorageProfile.OsDisk.ManagedDisk.Id -Location $location -CreateOption copy -InformationAction Ignore
+New-AzSnapshot -Snapshot $snapshotOSdisk1 -SnapshotName $snapshotOSdisk -ResourceGroupName $resourceGroupName -InformationAction Ignore
+
+$DataDisks = $VMproperties.StorageProfile.DataDisks
+#$datadisks
+if ($DataDisks.Count -ne 0){
+foreach ($datadisk in $DataDisks){
+#$datadiskname = $VMproperties.StorageProfile.DataDisks.Name
+$datadiskname = $datadisk.Name
+#$datadiskname
+
+#$datadiskname
+$snapshotDatadisk = "$VM" + "_$timestamp" + "$datadiskname"
+#$snapshotDatadisk
+$snapshotdiscodedados = New-AzSnapshotConfig -SourceUri $datadisk.ManagedDisk.Id -Location $location -CreateOption copy -InformationAction Ignore
+New-AzSnapshot -Snapshot $snapshotdiscodedados -SnapshotName $snapshotDatadisk -ResourceGroupName $resourceGroupName -InformationAction Ignore
+}
+}
+
+
+#Busca todos os snapshots com mais de 7 dias de existência no RG previamente selecionado.  
+
+$snapshots = Get-AzSnapshot -ResourceGroupName $resourceGroupName | Where {$_.TimeCreated -lt (Get-Date).addDays(-7)}
+foreach ($snapshot in $snapshots)
+{
+Remove-AzSnapshot -ResourceGroupName $snapshot.ResourceGroupName -SnapshotName $snapshot.Name -force
+}
