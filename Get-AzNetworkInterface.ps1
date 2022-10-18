@@ -1,3 +1,7 @@
+# Install Excel Modules
+Install-Module -Name ImportExcel -RequiredVersion 7.5.3 -Force -Verbose 
+Import-Module ImportExcel 
+
 class nics {
     [string]$NicName
     [string]$VMNAME
@@ -20,4 +24,6 @@ foreach ( $nicsid in $nicid){
     $nics.DNS = (Get-AzNetworkInterface -ResourceId $nicsid).DnsSettings.DnsServers
     $nicsList.add($nics)
 }
+# Export Excel and CSV
+$nicsList | Export-Excel -Path .\nics.xlsx -WorksheetName 'NICS' -AutoSize -TableStyle 'Light9' -FreezeTopRow -Append
 $nicsList | Export-Csv nics.csv
