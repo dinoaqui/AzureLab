@@ -3,6 +3,8 @@
 #
 #### Export NIC Name with Private IP and DNS Configuration
 #
+# TenantID
+# SubscriptionID
 
 # Install Excel Modules
 Install-Module -Name ImportExcel -RequiredVersion 7.5.3 -Force -Verbose 
