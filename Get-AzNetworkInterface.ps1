@@ -1,6 +1,8 @@
 #
 #### Script in developing - Be Carefull to Execute #####
 #
+#### Export NIC Name with Private IP and DNS Configuration
+#
 
 # Install Excel Modules
 Install-Module -Name ImportExcel -RequiredVersion 7.5.3 -Force -Verbose 
