@@ -1,30 +1,31 @@
-# Automation Account - Start and Stop AKS
-workflow start-stop-aks {
+workflow AA-Start-Stop-AKS {
 	Param(
-	[string]$VmName,
-	[string]$ResourceGroupName,
+	[string]$TagName,
+	[string]$TagValue,
 	[ValidateSet(“start”, “stop”)]
-	[string]$VmAction
-	
+	[string]$AKSAction
 	)
-	# Converter: Wrapping initial script in an InlineScript activity, and passing any parameters for use within the InlineScript
-	# Converter: If you want this InlineScript to execute on another host rather than the Automation worker, simply add some combination of -PSComputerName, -PSCredential, -PSConnectionURI, or other workflow common parameters (http://technet.microsoft.com/en-us/library/jj129719.aspx) as parameters of the InlineScript
-	inlineScript {
-		$VmName = $using:VmName
-		$ResourceGroupName = $using:ResourceGroupName
-		$VmAction = $using:VmAction
-		
-		# Autenticar na conta de automação
-		$Conn = Get-AutomationConnection -Name AzureRunAsConnection
-		Connect-AzAccount -ServicePrincipal -Tenant $Conn.TenantID `
--ApplicationID $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint
-		# Iniciar VM
-		IF ($VmAction -eq “stop”) {
-		Stop-AzAksCluster -Name $VmName -ResourceGroupName $ResourceGroupName
-		}
-		# Desligar VM
-		IF ($VmAction -eq “start”) {
-		Start-AzAksCluster -Name $VmName -ResourceGroupName $ResourceGroupName
-		}
-	}
+
+# Ensures you do not inherit an AzContext in your runbook
+Disable-AzContextAutosave -Scope Process
+
+# Connect to Azure with system-assigned managed identity
+Connect-AzAccount -Identity
+
+# set and store context
+$AzureContext = Set-AzContext –SubscriptionId "<Subscription ID>" 
+
+$vms = Get-AzResource -TagName $TagName -TagValue $TagValue | where {$_.ResourceType -like "Microsoft.ContainerService/managedClusters"}
+     
+    Foreach -Parallel ($vm in $vms){
+        
+        if($AKSAction -eq "stop" ){
+            Write-Output "Stopping $($vm.Name)";        
+            Stop-AzAksCluster -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName;
+        }
+        if($AKSAction -eq "start" ){
+            Write-Output "Starting $($vm.Name)";        
+            Start-AzAksCluster -Name $vm.Name -ResourceGroupName $vm.ResourceGroupName;
+        }
+    }
 }
