@@ -1,5 +1,6 @@
 #
 ## Edit it according to your environment - Use carefully.
+## The Basic SKU is NOT recommended for production environments. 
 #
 
 # Define your Resource Group Name
