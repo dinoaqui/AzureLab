@@ -18,7 +18,7 @@ $subnetPrefix = "192.168.1.0/27"
 $publicIpName = "pip-VNG-BASIC"
 
 
-# CreateSubnetGateway
+# Create SubnetGateway
 $subnet = New-AzVirtualNetworkSubnetConfig -Name $subnetName -AddressPrefix $subnetPrefix
 
 # Get VNET info
