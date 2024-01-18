@@ -1,5 +1,5 @@
 #
-# Edit it according to your environment.
+## Edit it according to your environment - Use carefully.
 #
 
 # Define your Resource Group Name
