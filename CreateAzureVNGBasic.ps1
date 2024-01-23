@@ -5,19 +5,24 @@
 
 # Define your Resource Group Name
 $resourceGroupName = "RG_VPN_BASIC"
+
 # Define your VNET Name
 $vnetName = "VNET-BASIC"
-# Put your Region
+
+# Specify your Azure region
 $location = "East US"
+
 # Set VNG Name
 $gatewayName = "VNG-BASIC"
+
 # Set Subnet Name
 $subnetName = "GatewaySubnet"
+
 # Set Subnet Gateway Address
 $subnetPrefix = "192.168.1.0/27"
+
 # Set Public IP VNG Name
 $publicIpName = "pip-VNG-BASIC"
-
 
 # Create SubnetGateway
 $subnet = New-AzVirtualNetworkSubnetConfig -Name $subnetName -AddressPrefix $subnetPrefix
@@ -26,7 +31,7 @@ $subnet = New-AzVirtualNetworkSubnetConfig -Name $subnetName -AddressPrefix $sub
 $vnet = Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $resourceGroupName
 
 # Get SubnetGateway info
-$subnetConfig = Get-AzVirtualNetworkSubnetConfig -name 'gatewaysubnet' -VirtualNetwork $vnet
+$subnetConfig = Get-AzVirtualNetworkSubnetConfig -Name $subnetName -VirtualNetwork $vnet
 
 # Create Public IP
 $publicIp = New-AzPublicIpAddress -ResourceGroupName $resourceGroupName -Location $location -Name $publicIpName -AllocationMethod Dynamic -Sku Basic
@@ -36,3 +41,4 @@ $gwIpConfig = New-AzVirtualNetworkGatewayIpConfig -Name "${gatewayName}IpConfig"
 
 # Create Azure Virtual Network Gateway
 New-AzVirtualNetworkGateway -ResourceGroupName $resourceGroupName -Location $location -Name $gatewayName -IpConfigurations $gwIpConfig -GatewayType "Vpn" -VpnType "RouteBased" -GatewaySku "Basic"
+
