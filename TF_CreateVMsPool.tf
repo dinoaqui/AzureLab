@@ -1,8 +1,19 @@
 # Specify the provider and version
 provider "azurerm" {
+  # The 'features' block is required but can be empty, indicating that no specific features are configured.
   features {}
+
+  # Specifies the version of the AzureRM provider Terraform will use.
+  # The '~> 2.0' notation means it will use the latest version in the 2.x range.
   version = "~>2.0"
+  
+  # The 'subscription_id' is the unique identifier for your Azure subscription under which resources will be created and managed.
+  # subscription_id = "0000000-0000000-00000-00000"
+  
+  # The 'tenant_id' is the unique identifier of the Azure Active Directory instance that your subscription belongs to.
+  # tenant_id = "0000000-0000000-00000-00000"
 }
+
 
 # Create a Resource Group
 resource "azurerm_resource_group" "rg" {
