@@ -1,10 +1,8 @@
 #
 #### Script in developing - Be Carefull to Execute #####
 #
-#### Export NIC Name with Private IP and DNS Configuration
-#
-# TenantID
-# SubscriptionID
+# This script provides a structured approach to gather and document Azure network interface configurations, 
+# which can be particularly useful for audits, documentation, or troubleshooting in cloud environments
 
 
 # Install and Import the ImportExcel module for Excel operations
