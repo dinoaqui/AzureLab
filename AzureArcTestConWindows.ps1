@@ -1,4 +1,6 @@
 # List of Azure Arc endpoints to check
+# Script for use testing connect Azure Arc Endpoint - Hosts Windows Server
+# You can find endpoint by log in "%ProgramData%\AzureConnectedMachineAgent\Log\"
 
 $endpoints = @(
     "management.azure.com", # Azure Resource Manager
