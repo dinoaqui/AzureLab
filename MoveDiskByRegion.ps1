@@ -1,3 +1,6 @@
+# Optional
+# Set-AzContext -Subscription "xxxx-xxxx-xxxx-xxxx"
+
 # Name of the Managed Disk you are starting with
 $sourceDiskName = "disk_name_source-osdisk-20200720-012539"
 # Name of the resource group the source disk resides in
