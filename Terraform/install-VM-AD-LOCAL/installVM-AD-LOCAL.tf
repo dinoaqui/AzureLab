@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-AD-LOCAL"
+  name     = "RG-AD-LOCAL"
   location = "East US 2"
 }
 
@@ -49,7 +49,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_DS1_v2"
-  admin_username      = "dinoaqui"
+  admin_username      = "sadraque"
   admin_password      = "!@12qwaszx"
   network_interface_ids = [
     azurerm_network_interface.nic.id,
