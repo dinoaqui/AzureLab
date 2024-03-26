@@ -6,6 +6,7 @@
 
 $storageAccountName = "Storage_Account_Name"
 $containerName = "Container_Name"
+# Local Destination Download
 $localDownloadPath = "C:\LocalPath"
 # Define String that you want download
 $pattern = "*_Contoso_202401*.pdf"
