@@ -1,7 +1,7 @@
 # Install Az.Storage (optional)
 # Install-Module -Name Az.Storage -Force -AllowClobber 
 
-# Conecte-se à sua conta do Azure (optional)
+# Connect Subscription ID (optional)
 # Connect-AzAccount -SubscriptionId XXXXXX-XXXXXXX-XXXXXX-XXXXXX
 
 $storageAccountName = "Storage_Account_Name"
