@@ -25,12 +25,19 @@ foreach ($vm in $vms) {
     $vmInfo = [PSCustomObject]@{
         VMName     = $vm.Name
         OSDiskName = $osDisk.Name
-        DataDisks  = $dataDisks.Name -join ", "
+        DataDisks  = ($dataDisks | ForEach-Object { $_.Name }) -join ", "
     }
 
     # Add the object to the list
     $vmList += $vmInfo
 }
 
+# Path for the CSV file
+$csvPath = "./VMsAndDisks.csv"
+
 # Save the list to a CSV file
-$vmList | Export-Csv -Path "./VMsAndDisks.csv" -NoTypeInformation
+$vmList | Export-Csv -Path $csvPath -NoTypeInformation
+
+# Output message about the file creation
+Write-Output "A lista de VMs e discos foi salva em: $csvPath"
+
