@@ -86,6 +86,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
+# DataDisk
+# data_disks {
+#   caching              = "ReadWrite"
+#   lun                  = 10
+#   disk_size_gb         = 100
+#   storage_account_type = "Standard_LRS"
+#}
+
   # Add tags to the VM resource
   tags = {
     Environment = "Development"
