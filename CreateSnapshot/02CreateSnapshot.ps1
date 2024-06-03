@@ -38,7 +38,8 @@ foreach ($vm in $vmList) {
             Write-Output "Creating snapshot for data disk: $dataDisk with source URI: /subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.Compute/disks/$dataDisk"
 
             $dataDiskSnapshotConfig = New-AzSnapshotConfig -SourceUri "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.Compute/disks/$dataDisk" -Location $Location -CreateOption Copy
-            New-AzSnapshot -ResourceGroupName $SnapshotResourceGroup -SnapshotName "$($vm.VMName)-$dataDisk-Snapshot" -Snapshot $dataDiskSnapshotConfig
+            $dataSnapshot = New-AzSnapshot -ResourceGroupName $SnapshotResourceGroup -SnapshotName "$($vm.VMName)-$dataDisk-Snapshot" -Snapshot $dataDiskSnapshotConfig
+            Write-Output "Snapshot created: $($dataSnapshot.Name) at $($dataSnapshot.TimeCreated)"
         }
     }
 }
