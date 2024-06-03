@@ -1,5 +1,5 @@
 # Parameter input: Name of the resource group
-# Usage: 01GetVMsAzure.ps1 -ResourceGroupName "ResourceGroupName"
+# Usage: 01GetVMsAzure.ps1 -ResourceGroupName "Resource_Group_Source"
 
 param (
     [string]$ResourceGroupName
