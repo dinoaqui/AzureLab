@@ -8,6 +8,17 @@
 ###            Scripting in testing, NOT EXECUTE!!!!                ###
 #######################################################################
 #######################################################################
+# This script automates the process of retrieving information about virtual machines (VMs)
+# connected to specified Azure Log Analytics Workspaces. It first installs the necessary module
+# for Excel operations if not present, connects to an Azure account, sets the context to the
+# specified Azure subscription, and then processes a list of Workspace IDs. For each Workspace ID,
+# the script fetches the corresponding workspace details, retrieves all VMs under that subscription,
+# and checks each VM for a specific monitoring agent extension (either for Windows or Linux based on the OS).
+# It collects detailed information about each connected VM, including the VM's name, resource group,
+# location, type of monitoring agent, and the tags associated with its resource group and workspace.
+# Finally, it exports this information into an Excel file for each workspace, naming the file
+# according to the workspace name and the subscription context. This helps in managing and auditing
+# VM connections to Azure Log Analytics workspaces efficiently.
 
 
 # Install the ImportExcel module if it is not already installed
