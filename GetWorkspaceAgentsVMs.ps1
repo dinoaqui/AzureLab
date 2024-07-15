@@ -1,3 +1,20 @@
+#######################################################################
+#######################################################################
+###            Scripting in testing, NOT EXECUTE!!!!                ###
+###            Scripting in testing, NOT EXECUTE!!!!                ###
+###            Scripting in testing, NOT EXECUTE!!!!                ###
+###            Scripting in testing, NOT EXECUTE!!!!                ###
+###            Scripting in testing, NOT EXECUTE!!!!                ###
+###            Scripting in testing, NOT EXECUTE!!!!                ###
+#######################################################################
+#######################################################################
+
+
+# Install the ImportExcel module if it is not already installed
+if (-not (Get-Module -ListAvailable -Name ImportExcel)) {
+    Install-Module -Name ImportExcel -Force -Scope CurrentUser
+}
+
 # Connect to Azure
 ## Connect-AzAccount
 
