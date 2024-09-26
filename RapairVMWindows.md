@@ -39,9 +39,7 @@
         remove letter=S
         ```
 
-#### **5. Documentação e Encerramento**
-   - **Passo 11**: Registre as etapas executadas no processo de reparo, incluindo a expansão do disco e o uso do `sfc`.
-   - **Passo 12**: Informe o cliente ou superior responsável sobre a conclusão do processo e forneça detalhes da documentação de suporte, como links para artigos relevantes do **Microsoft Learn**.
+#### **5. Documentação**
    - https://learn.microsoft.com/pt-br/troubleshoot/azure/virtual-machines/windows/troubleshoot-guide-critical-process-died#fix-any-os-corruption
 
 ---
