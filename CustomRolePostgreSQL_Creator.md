@@ -1,127 +1,127 @@
 ---
 
-# 🎯 Roteiro Operacional: Criação do Custom Role "Custom PostgreSQL Creator" no Azure
+# 📄 Azure Custom Role Deployment Guide - "Custom PostgreSQL Creator"
 
 ---
 
-## 1️⃣ Objetivo
+## Objective
 
-Criar um Azure Custom Role com permissões mínimas para:
-
-* Criar Azure Database for PostgreSQL Flexible Server.
-* Realizar o join da instância na Virtual Network.
-* Ler resource groups (para vinculação durante a criação).
+Create a custom Azure RBAC role that allows the user to deploy Azure Database for PostgreSQL Flexible Server instances and assign them to an existing virtual network.
 
 ---
 
-## 2️⃣ Pré-requisitos
+## Required Permissions to Execute
 
-* Permissão de **Owner** ou **User Access Administrator** na subscription (para criar custom roles).
-* Azure CLI instalado e autenticado:
+The operator performing this deployment must have:
 
-  ```bash
-  az login
-  az account set --subscription "<ID-ou-Nome-da-Subscription>"
-  ```
+* **Owner** or **User Access Administrator** role at subscription or resource group scope.
 
 ---
 
-## 3️⃣ Conteúdo do Role Definition
+## Custom Role Definition
 
-Crie um arquivo local chamado `custom-postgresql-creator.json` com o seguinte conteúdo:
+### JSON Role Definition
 
 ```json
 {
-  "properties": {
-    "roleName": "Custom PostgreSQL Creator",
-    "description": "Permite criar instâncias do Azure Database for PostgreSQL Flexible Server e associar à rede.",
-    "assignableScopes": [
-      "/subscriptions/cd8eb3e2-2cf3-45e7-b805-fbe2052c0d2c"
-    ],
-    "permissions": [
-      {
-        "actions": [
-          "Microsoft.DBforPostgreSQL/flexibleServers/write",
-          "Microsoft.DBforPostgreSQL/flexibleServers/read",
-          "Microsoft.DBforPostgreSQL/flexibleServers/backups/read",
-          "Microsoft.DBforPostgreSQL/flexibleServers/backups/write",
-          "Microsoft.DBforPostgreSQL/flexibleServers/backups/delete",
-          "Microsoft.Resources/subscriptions/resourceGroups/read",
-          "Microsoft.Network/virtualNetworks/subnets/join/action",
-          "Microsoft.Resources/deployments/validate/action",
-          "Microsoft.Resources/deployments/write",
-          "Microsoft.Resources/deployments/read"
-        ],
-        "notActions": [],
-        "dataActions": [],
-        "notDataActions": []
-      }
-    ]
-  }
+  "Name": "Custom PostgreSQL Creator",
+  "IsCustom": true,
+  "Description": "Allows creation of Azure Database for PostgreSQL Flexible Server instances and assign them to a Virtual Network subnet.",
+  "Actions": [
+    "Microsoft.DBforPostgreSQL/flexibleServers/write",
+    "Microsoft.DBforPostgreSQL/flexibleServers/read",
+    "Microsoft.DBforPostgreSQL/flexibleServers/backups/read",
+    "Microsoft.DBforPostgreSQL/flexibleServers/backups/write",
+    "Microsoft.DBforPostgreSQL/flexibleServers/backups/delete",
+    "Microsoft.Resources/subscriptions/resourceGroups/read",
+    "Microsoft.Network/virtualNetworks/subnets/join/action",
+    "Microsoft.Resources/deployments/validate/action",
+    "Microsoft.Resources/deployments/write",
+    "Microsoft.Resources/deployments/read"
+  ],
+  "NotActions": [],
+  "DataActions": [],
+  "NotDataActions": [],
+  "AssignableScopes": [
+    "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  ]
 }
-
 ```
 
-⚠ Atenção: Substituir `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` pelo ID da subscription onde o role será válido.
+> 🔧 Replace `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` with your actual Azure Subscription ID.
 
-Para consultar o ID da subscription:
+---
+
+## Deployment Steps
+
+### 1️⃣ Login to Azure CLI
 
 ```bash
-az account show --query id -o tsv
+az login
+```
+
+> Optional: specify subscription if you have multiple:
+
+```bash
+az account set --subscription "<subscription-name-or-id>"
 ```
 
 ---
 
-## 4️⃣ Publicação do Custom Role
+### 2️⃣ Save Role Definition JSON
 
-Execute o comando abaixo para publicar:
+* Create a local file named `custom_postgresql_creator.json`
+* Paste the JSON role definition into the file.
+
+---
+
+### 3️⃣ Create the Custom Role
 
 ```bash
-az role definition create --role-definition custom-postgresql-creator.json
+az role definition create --role-definition ./custom_postgresql_creator.json
+```
+
+✅ If successful, you will receive no error message.
+
+---
+
+### 4️⃣ Validate Role Creation
+
+```bash
+az role definition list --name "Custom PostgreSQL Creator"
+```
+
+Or
+
+```bash
+az role definition show --name "Custom PostgreSQL Creator"
 ```
 
 ---
 
-## 5️⃣ Validação
+### 5️⃣ Assign Role to User/Group
 
-Verifique se o role foi criado com sucesso:
-
-```bash
-az role definition list --name "Custom PostgreSQL Creator" --output json
-```
-
----
-
-## 6️⃣ Atribuição do Role
-
-Agora atribua o custom role ao usuário, grupo ou service principal desejado:
+To assign the role to a user, group or service principal:
 
 ```bash
 az role assignment create \
-  --assignee <UPN-ou-Object-ID> \
+  --assignee "<object-id-or-username>" \
   --role "Custom PostgreSQL Creator" \
-  --scope /subscriptions/<ID-da-subscription>/resourceGroups/<nome-do-resource-group>
+  --scope "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/<resource-group-name>"
 ```
 
----
-
-## 7️⃣ Teste de Validação
-
-* Acesse o Portal Azure com o usuário atribuído.
-* Tente criar um **Azure Database for PostgreSQL Flexible Server**.
-* Confirme que:
-
-  * É possível criar a instância.
-  * É possível associar à VNET.
-  * Não há permissão ampla para criar outros recursos fora do escopo.
+> 🔧 Replace placeholders accordingly.
 
 ---
 
-✅ **Fim do roteiro**
+## Important Notes
+
+* This role **does not allow deletion** of PostgreSQL instances.
+* Network operations are limited to subnet assignment during deployment.
+* Further permission may be required depending on Key Vault, Private DNS Zone, or VNET delegation usage.
 
 ---
 
-Se quiser, eu também posso montar um **modelo pronto de documentação interna**, no estilo padrão de ITSM, para você anexar em base de conhecimento de GMUD, Change, Governança etc.
+✅ **Deployment complete and ready for production use.**
 
-👉 Quer que eu monte essa versão?
-(Nesse caso fica com "objetivo", "responsável", "pré-requisito", "execução", "rollback" etc).
+---
