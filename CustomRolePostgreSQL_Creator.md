@@ -1,6 +1,3 @@
-Perfeito, Diego — agora vou te preparar um **roteiro prático (operacional)** para uso interno, documentação de time, sem depender de GitHub.
-Esse modelo pode ser usado para criar, revisar e aplicar o role diretamente no Azure.
-
 ---
 
 # 🎯 Roteiro Operacional: Criação do Custom Role "Custom PostgreSQL Creator" no Azure
