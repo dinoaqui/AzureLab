@@ -1,5 +1,3 @@
----
-
 # 📄 Azure Custom Role Deployment Guide - "Custom PostgreSQL Creator"
 
 ---
