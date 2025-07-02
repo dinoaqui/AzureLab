@@ -1,178 +1,193 @@
-### Documentação: Expansão de Volumes Lógicos (LVM) e Partições no Sistema de Arquivos XFS
-
-#### Sumário
-1. [Introdução](#introdução)
-2. [Verificação de Configuração Inicial](#verificação-de-configuração-inicial)
-3. [Criação de Nova Partição LVM](#criação-de-nova-partição-lvm)
-4. [Expansão do Volume Group (VG)](#expansão-do-volume-group-vg)
-5. [Expansão dos Volumes Lógicos (LVs)](#expansão-dos-volumes-lógicos-lvs)
-6. [Criação de Novo Volume Lógico e Montagem](#criação-de-novo-volume-lógico-e-montagem)
-7. [Verificação Final](#verificação-final)
+Segue abaixo a **tradução completa para inglês (en-us)** da sua documentação técnica, mantendo o tom formal e técnico:
 
 ---
 
-### Introdução
+## Documentation: Logical Volume (LVM) and XFS Filesystem Expansion
 
-Este documento fornece um passo a passo detalhado para a criação de uma nova partição LVM, expansão do volume group (`rootvg`) e aumento dos volumes lógicos existentes, que utilizam o sistema de arquivos XFS. A expansão foi realizada para os diretórios `/var`, `/tmp`, `/home`, além da criação de um novo volume lógico montado em `/dados`.
+### Summary
 
-### Verificação de Configuração Inicial
+1. [Introduction](#introduction)
+2. [Initial Configuration Check](#initial-configuration-check)
+3. [Creating a New LVM Partition](#creating-a-new-lvm-partition)
+4. [Expanding the Volume Group (VG)](#expanding-the-volume-group-vg)
+5. [Expanding Logical Volumes (LVs)](#expanding-logical-volumes-lvs)
+6. [Creating a New Logical Volume and Mounting](#creating-a-new-logical-volume-and-mounting)
+7. [Final Verification](#final-verification)
 
-Antes de iniciar a expansão, verifique o estado atual dos volumes lógicos (LVs), volume group (VG), e o tipo de sistema de arquivos utilizando os seguintes comandos:
+---
 
-1. **Verificar o volume group (`rootvg`)**:
+### Introduction
+
+This document provides a detailed step-by-step guide for creating a new LVM partition, expanding the `rootvg` volume group, and increasing the size of existing logical volumes that use the XFS filesystem. The expansion was performed for the `/var`, `/tmp`, and `/home` directories, as well as the creation of a new logical volume mounted at `/dados`.
+
+### Initial Configuration Check
+
+Before starting the expansion process, check the current status of the logical volumes (LVs), volume group (VG), and filesystem type using the following commands:
+
+1. **Check the volume group (`rootvg`):**
 
    ```bash
    vgdisplay rootvg
    ```
 
-2. **Verificar os volumes lógicos (`LVs`)**:
+2. **Check the logical volumes (LVs):**
 
    ```bash
    lvs
    ```
 
-3. **Verificar o tipo de sistema de arquivos montado**:
+3. **Check the mounted filesystem types:**
 
    ```bash
    df -T
    ```
 
-### Criação de Nova Partição LVM
+### Creating a New LVM Partition
 
-#### Passo 1: Adicionar um Novo Disco
+#### Step 1: Add a New Disk
 
-- **Adicionar um novo disco físico ou virtual** à máquina, que será utilizado para expansão.
+* **Add a new physical or virtual disk** to the machine that will be used for expansion.
 
-#### Passo 2: Identificar o Novo Disco
+#### Step 2: Identify the New Disk
 
-Use o comando `fdisk -l` para identificar o novo disco adicionado, por exemplo, `/dev/sdb`.
+Use the following command to identify the new disk, for example `/dev/sdb`:
 
-#### Passo 3: Criar uma Nova Partição LVM
+```bash
+fdisk -l
+```
 
-Crie uma nova partição no disco identificado:
+#### Step 3: Create a New LVM Partition
+
+Create a new partition on the identified disk:
 
 ```bash
 fdisk /dev/sdb
 ```
-Dentro do `fdisk`:
-- Pressione `n` para criar uma nova partição.
-- Escolha `primary`.
-- Aceite os valores padrão para utilizar todo o espaço do disco.
-- Pressione `t` e selecione o tipo `8e` (Linux LVM).
-- Pressione `w` para salvar as mudanças.
 
-### Expansão do Volume Group (VG)
+Inside `fdisk`:
 
-#### Passo 1: Criar um Physical Volume (PV)
+* Press `n` to create a new partition.
+* Choose `primary`.
+* Accept the default values to use the entire disk space.
+* Press `t` and set the type to `8e` (Linux LVM).
+* Press `w` to write the changes.
+
+### Expanding the Volume Group (VG)
+
+#### Step 1: Create a Physical Volume (PV)
 
 ```bash
 pvcreate /dev/sdb1
 ```
 
-#### Passo 2: Adicionar o PV ao Volume Group (`rootvg`)
+#### Step 2: Add the PV to the Volume Group (`rootvg`)
 
 ```bash
 vgextend rootvg /dev/sdb1
 ```
 
-Após a execução, o volume group `rootvg` deve ter espaço adicional disponível.
+After running the above command, the `rootvg` volume group will have additional free space.
 
-### Expansão dos Volumes Lógicos (LVs)
+### Expanding Logical Volumes (LVs)
 
-Os volumes lógicos existentes foram expandidos para atender às novas necessidades de espaço.
+The existing logical volumes were expanded to meet the new storage requirements.
 
-#### Expansão do `/var` para 50 GB
+#### Expand `/var` to 50 GB
 
-1. **Expandir o volume lógico**:
+1. **Extend the logical volume:**
 
    ```bash
    lvextend -L +42G /dev/mapper/rootvg-varlv
    ```
 
-2. **Expandir o sistema de arquivos XFS**:
+2. **Extend the XFS filesystem:**
 
    ```bash
    xfs_growfs /var
    ```
 
-#### Expansão do `/tmp` para 50 GB
+#### Expand `/tmp` to 50 GB
 
-1. **Expandir o volume lógico**:
+1. **Extend the logical volume:**
 
    ```bash
    lvextend -L +48G /dev/mapper/rootvg-tmplv
    ```
 
-2. **Expandir o sistema de arquivos XFS**:
+2. **Extend the XFS filesystem:**
 
    ```bash
    xfs_growfs /tmp
    ```
 
-#### Expansão do `/home` para 50 GB
+#### Expand `/home` to 50 GB
 
-1. **Expandir o volume lógico**:
+1. **Extend the logical volume:**
 
    ```bash
    lvextend -L +49G /dev/mapper/rootvg-homelv
    ```
 
-2. **Expandir o sistema de arquivos XFS**:
+2. **Extend the XFS filesystem:**
 
    ```bash
    xfs_growfs /home
    ```
 
-### Criação de Novo Volume Lógico e Montagem
+### Creating a New Logical Volume and Mounting
 
-#### Passo 1: Criar o Volume Lógico (`/dados`)
+#### Step 1: Create the Logical Volume for `/dados`
 
-Use o espaço restante no volume group (`rootvg`):
+Use the remaining free space in the `rootvg`:
 
 ```bash
 lvcreate -l 100%FREE -n dadoslv rootvg
 ```
 
-#### Passo 2: Formatar o Novo Volume Lógico com XFS
+#### Step 2: Format the New Logical Volume with XFS
 
 ```bash
 mkfs.xfs /dev/mapper/rootvg-dadoslv
 ```
 
-#### Passo 3: Montar o Novo Volume Lógico em `/dados`
+#### Step 3: Mount the New Logical Volume at `/dados`
 
-1. **Criar o diretório `/dados`**:
+1. **Create the `/dados` directory:**
 
    ```bash
    mkdir /dados
    ```
 
-2. **Adicionar o novo volume ao fstab**:
+2. **Add the new volume to `/etc/fstab`:**
 
    ```bash
    echo '/dev/mapper/rootvg-dadoslv /dados xfs defaults 0 2' >> /etc/fstab
    ```
 
-3. **Montar o volume**:
+3. **Mount all filesystems:**
 
    ```bash
    mount -a
    ```
 
-### Verificação Final
+### Final Verification
 
-Verifique se todos os volumes foram expandidos e estão utilizando o novo espaço corretamente:
+Verify that all volumes have been expanded and are using the new space correctly:
 
 ```bash
 df -h
 ```
 
-Este comando deve mostrar os novos tamanhos das partições `/var`, `/tmp`, `/home` e `/dados`.
+This command should display the new sizes for the `/var`, `/tmp`, `/home`, and `/dados` partitions.
 
 ---
 
-### Conclusão
+### Conclusion
 
-Este documento detalha o processo de expansão de volumes lógicos utilizando LVM em um ambiente Linux com sistema de arquivos XFS. Através dos passos fornecidos, é possível gerenciar de forma eficiente o espaço em disco, garantindo que as necessidades de armazenamento sejam atendidas.
+This document details the process of expanding logical volumes using LVM in a Linux environment with XFS filesystem. By following the provided steps, you can efficiently manage disk space to meet storage requirements.
 
-Se precisar de mais detalhes ou assistência adicional, entre em contato com o administrador do sistema.
+If you need further details or additional assistance, please contact the system administrator.
+
+---
+
+Se quiser, posso gerar o arquivo formatado (Markdown, PDF, etc.)! Quer? 🚀
