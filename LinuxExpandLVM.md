@@ -1,7 +1,3 @@
-Segue abaixo a **tradução completa para inglês (en-us)** da sua documentação técnica, mantendo o tom formal e técnico:
-
----
-
 ## Documentation: Logical Volume (LVM) and XFS Filesystem Expansion
 
 ### Summary
@@ -189,5 +185,3 @@ This document details the process of expanding logical volumes using LVM in a Li
 If you need further details or additional assistance, please contact the system administrator.
 
 ---
-
-Se quiser, posso gerar o arquivo formatado (Markdown, PDF, etc.)! Quer? 🚀
