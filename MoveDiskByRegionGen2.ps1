@@ -10,14 +10,14 @@
 # ==============================
 # SOURCE DISK VARIABLES
 # ==============================
-$sourceDiskName = "U19ORA1HML_OsDisk_1"
-$sourceRG       = "rg-snapshot-temp-brs"
+$sourceDiskName = "VirtualMachineName_OsDisk_eus2"
+$sourceRG       = "rg-workload-eus2"
 
 # ==============================
 # TARGET DISK VARIABLES
 # ==============================
-$targetDiskName = "U19ORA1HML_OsDisk_16112025"
-$targetRG       = "rg-mig-brs-eus2"
+$targetDiskName = "VirtualMachineName_OsDisk_brs"
+$targetRG       = "rg-workload-brs"
 $targetLocation = "BrazilSouth"   # Azure region where the TARGET disk will be created
 
 # ==============================
